@@ -3,9 +3,9 @@ using HairSalon.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc,Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace HairSalon.AddControllers
+namespace HairSalon.Controllers
 {
   public class ClientsController : Controller
   {
@@ -35,7 +35,7 @@ namespace HairSalon.AddControllers
     {
       if (client.StylistId == 0)
       {
-        return RedirectToAction("Create")
+        return RedirectToAction("Create");
       }
       _db.Clients.Add(client);
       _db.SaveChanges();
@@ -46,13 +46,13 @@ namespace HairSalon.AddControllers
     {
       Client thisClient = _db.Clients
                               .Include(client => client.Stylist)
-                              .FirstorDefault(client => client.ClientId == id);
+                              .FirstOrDefault(client => client.ClientId == id);
       return View(thisClient);
     }
 
     public ActionResult Edit(int id)
     {
-      Client thisClient = _db.Clients.FirstorDefault(client => client.ClientId == id);
+      Client thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);
       ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View(thisClient);
     }
@@ -67,7 +67,7 @@ namespace HairSalon.AddControllers
 
     public ActionResult Delete(int id)
     {
-      Client thisClient = _db.Clients.FirstorDefault(client => client.ClientId == id);
+      Client thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);
       ViewBag.field = "Name";
       ViewBag.name = thisClient.Name;
       return View(thisClient);
@@ -76,7 +76,7 @@ namespace HairSalon.AddControllers
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      Client thisClient = _db.Clients.FirstorDefault(client => client.ClientId == id);
+      Client thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);
       _db.Clients.Remove(thisClient);
       _db.SaveChanges();
       return RedirectToAction("Index");
