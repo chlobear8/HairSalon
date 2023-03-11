@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using HairSalon.Models;
+using System.Linq;
 
 namespace HairSalon
 {
@@ -24,6 +25,8 @@ namespace HairSalon
       WebApplication app = builder.Build();
 
       app.UseHttpsRedirection();
+
+      app.UseStaticFiles();
 
       app.UseRouting();
 
